@@ -1,2 +1,4 @@
 ﻿  Dungeon.cpp
+D:\Programación\Dungeon\Dungeon\Dungeon.cpp(145,67): warning C4390: ';': se encontró una instrucción controlada vacía; ¿es esa la intención?
+D:\Programación\Dungeon\Dungeon\Dungeon.cpp(139): warning C4715: 'Dungeon::searchNextPos': no todas las rutas de acceso de control devuelven un valor
   Dungeon.vcxproj -> D:\Programación\Dungeon\Debug\Dungeon.exe

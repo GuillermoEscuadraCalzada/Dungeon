@@ -152,6 +152,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dungeon\Dungeon.h" />
+    <ClInclude Include="Dungeon\Grafo\Grafo.h" />
+    <ClInclude Include="Dungeon\Grafo\ListaS.h" />
+    <ClInclude Include="Dungeon\Grafo\NodoG.h" />
+    <ClInclude Include="Dungeon\Grafo\NodoT.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

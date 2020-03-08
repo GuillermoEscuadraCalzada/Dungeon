@@ -16,18 +16,33 @@
     <Filter Include="Archivos de encabezado\Dungeon">
       <UniqueIdentifier>{b36d88cd-373b-4fbe-810b-9bb482bca43a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\Grafo">
+      <UniqueIdentifier>{c40122c2-d731-44be-8eb1-97773246b964}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Dungeon.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Dungeon.cpp">
+      <Filter>Archivos de encabezado\Dungeon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dungeon\Dungeon.h">
       <Filter>Archivos de encabezado\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon\Grafo\Grafo.h">
+      <Filter>Archivos de encabezado\Grafo</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon\Grafo\ListaS.h">
+      <Filter>Archivos de encabezado\Grafo</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon\Grafo\NodoG.h">
+      <Filter>Archivos de encabezado\Grafo</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon\Grafo\NodoT.h">
+      <Filter>Archivos de encabezado\Grafo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

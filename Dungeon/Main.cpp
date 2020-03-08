@@ -4,5 +4,5 @@
 int main() {
     Dungeon* dungeon = Dungeon::GetPtr();
     dungeon->Init();
-    std::cout << "Hello World!\n";
+    dungeon->Update();
 }
