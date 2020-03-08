@@ -21,8 +21,7 @@ public:
 	int cost; //Cuanto me costó llegar aquí
 	int Bidilvl; //De cual busqueda soy
 	int Danger; //De cual busqueda soy
-	int x;
-	int y;
+	
 	int valorDePosicion;
 	Vector2* position;
 	NodoG<T>(T dat) : nodoData(dat) {}
@@ -35,8 +34,7 @@ public:
 		position = new Vector2(x, y); 
 		valorDePosicion = 10;
 	}
-	//NodoG<T>(T dat, int x, int y) : nodoData(dat), x(x), y(y) {}
-	NodoG<T>(T dat, int d) : nodoData(dat), Danger(d) {}
+
 	NodoG<T>(const NodoG<T> &n) : nodoData(n.nodoData) 
 	{
 		std::cout << "Se está creando copia\n";

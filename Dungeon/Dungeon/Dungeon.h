@@ -21,7 +21,8 @@ private:
 	Grafo<int> posibilidades;
 	void Setup();
 	void searchForStart();
-	bool searchNextPos(Vector2* pos);
+	bool searchNextPos(Vector2* pos, NodoG<int>* nodoBusqueda);
+	int checarHijos(NodoG<int>* nodoHijo);
 	bool isOnEnd = false;
 	Dungeon();
 	~Dungeon();

@@ -231,7 +231,7 @@ void ListaS<T>::Print() {
 		NodoT<T>* it = first;
 		while (it != NULL)
 		{
-			std::cout << it->index << ")" << it->value->nodoData << "\t" << "Position("<< it->value->position->posX  <<", " << it->value->position->posY <<")" << std::endl;
+			std::cout << it->index << ")" << it->value->nodoData << "\t" << "Position("<< it->value->position->posY  <<", " << it->value->position->posX <<")" << std::endl;
 			it = it->next;
 		}
 	}

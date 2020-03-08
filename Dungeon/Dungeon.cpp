@@ -99,52 +99,127 @@ void Dungeon::searchForStart()
 }
 
 /*Obtiene la posición actual del jugador y lo mueve a ese lugar*/
-bool Dungeon::searchNextPos(Vector2* pos)
+bool Dungeon::searchNextPos(Vector2* pos, NodoG<int>* busqueda)
 {
     try {
+        dungeon[busqueda->position->posY][busqueda->position->posX] = -1;
+        Print();
+
         //Pregunta si la suma de las posiciones de los elementos al rededor del nodo son igual al valor de end
-        if (new Vector2(pos->posX + 1, pos->posY ) == end || new Vector2(pos->posX - 1, pos->posY) == end || new Vector2(pos->posX, pos->posY + 1) == end || new Vector2(pos->posX , pos->posY - 1) == end) { 
-            return true;
-        }
+
         /*Pregunta si la posición en frente de la actual es menor al número total de columnas (7) para no preguntar fuera del rango en el eje x. También pregunta si en la matriz el valor es igual a 1*/
         if (pos->posX + 1 < columns && dungeon[pos->posY][pos->posX + 1] == 1) {
-            posibilidades.GetFirst()->l.Add(new NodoG<int>(dungeon[pos->posY][pos->posX + 1], pos->posY, pos->posX + 1));
+            NodoG<int>* derecha = new NodoG<int>(dungeon[pos->posY][pos->posX + 1], pos->posX + 1, pos->posY); //Crea un nodo con la posición siguiente al nodo búsqueda [y][x + 1]
+            if (derecha->position->posX == end->posX && derecha->position->posY == end->posY) { //Pregunta si el nodo tiene la misma posición al vector end
+                busqueda->position = end; //Actualiza la posición aquí
+                dungeon[busqueda->position->posY][busqueda->position->posX] = -1; //Cambia el valor de la matriz a -1
+                Print(); //Imprime
+                return true; //Regresa verdadero
+            } if (checarHijos(derecha) > 0) { //Checa si hay hijos en la casilla derecha
+                busqueda->l.Add(derecha); //Añade el valor a la lista del nodo búsqueda
+                busqueda->cost += 10; //Aumenta el costo en 10
+            }else { //No tiene hijos válidos a la derecha
+                busqueda->cost += 25; //Aumenta el costo en 25
+            }
 
+        } else { //No tiene el valor de 1, es una pared o ya fue visitado
+            busqueda->cost += 25; //Aumenta el costo en 25
         }
         /*Pregunta si la posición atrás de la actual es mayor o igual a cero para preguntar que está dentro de la matriz por la parte izquierda. También pregunta si en la matriz el valor es igual a 1*/
         if (pos->posX - 1 >= 0 && dungeon[pos->posY][pos->posX - 1] == 1) { 
-            posibilidades.GetFirst()->l.Add(new NodoG<int>(dungeon[pos->posY][pos->posX - 1], pos->posY, pos->posX - 1));
+            NodoG<int>* izquierda = new NodoG<int>(dungeon[pos->posY][pos->posX - 1], pos->posX - 1, pos->posY); //Crea un nodo con la posición atrás al nodo búsqueda [y][x - 1]
+            if (izquierda->position->posX == end->posX && izquierda->position->posY == end->posY) {
+                busqueda->position = end;
+                dungeon[busqueda->position->posY][busqueda->position->posX] = -1;
+                Print();
+                return true;
+            } if (checarHijos(izquierda) > 0) {
+                busqueda->l.Add(izquierda);
+                busqueda->cost += 10;
+            }else{
+                busqueda->cost += 25;
+            }
+        } else { //No tiene el valor de 1, es una pared o ya fue visitado
+            busqueda->cost += 25;
         }
         /*Pregunta si la posición abajo de la actual es mayor a la cantidad total de líneas (7) y que no se ha salido del arreglo. También pregunta si en la matriz el valor es igual a 1*/
         if (pos->posY + 1 < lines && dungeon[pos->posY + 1][pos->posX] == 1) { //Preguntar si hay alguien debajo
-            posibilidades.GetFirst()->l.Add(new NodoG<int>(dungeon[pos->posY + 1][pos->posX], pos->posY + 1, pos->posX));
+            NodoG<int>* abajo = new NodoG<int>(dungeon[pos->posY+ 1][pos->posX], pos->posX, pos->posY + 1); //Crea un nodo con la posición abajo al nodo búsqueda [y + 1][x]
+            if (abajo->position->posX == end->posX && abajo->position->posY == end->posY) {
+                busqueda->position = end; //Actualiza la posición
+                dungeon[busqueda->position->posY][busqueda->position->posX] = -1;
+                Print();
+                return true;
+            } if (checarHijos(abajo) > 0) {
+                busqueda->l.Add(abajo);
+                busqueda->cost += 10;
+            }else{
+                busqueda->cost += 25;
+            }
+        } else {//No tiene el valor de 1, es una pared o ya fue visitado
+            busqueda->cost += 25;
         }
         /*Pregunta si la posición arriba de la actual es mayor a cero y que no se ha salido del arreglo. También pregunta si en la matriz el valor es igual a 1*/
         if (pos->posY - 1 >= 0 && dungeon[pos->posY - 1][pos->posX] == 1) {
-            posibilidades.GetFirst()->l.Add(new NodoG<int>(dungeon[pos->posY - 1][pos->posX], pos->posY - 1, pos->posX));
+            NodoG<int>* arriba = new NodoG<int>(dungeon[pos->posY + 1][pos->posX], pos->posX, pos->posY - 1); //Crea un nodo con la posición de arriba al nodo búsqueda [y - 1][x]
+            if (arriba->position->posX == end->posX && arriba->position->posY == end->posY) {
+                busqueda->position = end;
+                dungeon[busqueda->position->posY][busqueda->position->posX] = -1;
+                Print();
+                return true;
+            } if (checarHijos(arriba) > 0) {
+                busqueda->l.Add(arriba);
+                busqueda->cost += 10;
+            } else {
+                busqueda->cost += 25;
+            }
+        } else { //No tiene el valor de 1, es una pared o ya fue visitado
+            busqueda->cost += 25;
         }
-        posibilidades.GetFirst()->l.Print(); //Imprime todos los hijos del nodo actual
-        NodoT<NodoG<int>*>* iterador = posibilidades.GetFirst()->l.first;
-        while (iterador != nullptr) {
-            dungeon[posibilidades.GetFirst()->position->posY][posibilidades.GetFirst()->position->posX] = -1;
 
-            posibilidades.GetFirst()->position = iterador->value->position;
+        if (busqueda->cost >= 100 || !busqueda->l.first) 
+            return false;
+        
+        busqueda->l.Print(); //Imprime todos los hijos del nodo actual
+        NodoT<NodoG<int>*>* iterador = busqueda->l.first;
+        while (iterador != nullptr) {
+            if (searchNextPos(iterador->value->position, iterador->value)) {
+                busqueda->position = iterador->value->position;
+            }
             iterador = iterador->next;
         }
-        return false;
     }
     catch (...) {
         cout << "Algo salio mal!\n";
     }
 }
 
+/*Se decide checar los hijos del nodo en el que se está iteradndo, así se pregunta la cantidad de hijos encontrados en ese momento. Si no hay ningún hijo se regresa un cero y se le pone
+ *un valor grande a la etiqueta del nodo "padre"
+ *@param[NodoG<int>* nodoHijo] el nodo al que se le pregunta cuántos hijos tiene*/
+int Dungeon::checarHijos(NodoG<int>* nodoHijo)
+{
+    int counter = 0; //Se crea un contador desde cero
+    if (nodoHijo->position->posX + 1 < columns && dungeon[nodoHijo->position->posY][nodoHijo->position->posX + 1] == 1) { //Se pregunta si hay un número a la derecha y qué numero tiene, si es uno es aceptado
+        counter++; //Aumenta el contador
+    }
+    if (nodoHijo->position->posX - 1 < columns && dungeon[nodoHijo->position->posY][nodoHijo->position->posX - 1] == 1) { //Se pregunta si hay un número a la izquierda y si tiene el valor de 1
+        counter++; //Aumenta el contador
+    }if (nodoHijo->position->posY + 1 < columns && dungeon[nodoHijo->position->posY +  1][nodoHijo->position->posX] == 1) { //Se pregunta si hay un número abajo y si tiene el valor de 1
+        counter++; //Aumenta el contador
+    }if (nodoHijo->position->posY - 1 < columns && dungeon[nodoHijo->position->posY - 1][nodoHijo->position->posX] == 1) { //Se pregunta si hay un número arriba y si tiene el valor de 1
+        counter++; //Aumenta el contador
+    }
+    return counter; //Regresa el contador
+}
+
 /*Se actualiza constantemente las decisiones del agente*/
 void Dungeon::Update() {
     try {
-        while (!isOnEnd) {
-            if (searchNextPos(posibilidades.GetFirst()->position));
-            isOnEnd = !isOnEnd;
-            Print();
+        while (!isOnEnd) { //Avanza hasta que el número se encuentra dentro de la posición End
+            if (searchNextPos(posibilidades.GetFirst()->position,  posibilidades.GetFirst()))
+                isOnEnd = !isOnEnd;
+            //Print();
         }
     } catch(exception & e) {
         cout << "EXCEPTION CAUGHT: " << e.what() << endl;
@@ -168,9 +243,9 @@ void Dungeon::Print() {
         /*Recorrer la matriz de 7 x 7 e imprimir cada uno de sus elementos*/
         for(int i = 0; i < lines; i++) { 
             for(int j = 0; j < columns; j++) {
-                cout << dungeon[i][j] <<" ";
+                cout << dungeon[i][j] <<"\t";
             }
-            cout << endl;
+            cout << endl << endl;
         }
         cout << endl;
 
