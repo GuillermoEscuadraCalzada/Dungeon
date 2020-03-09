@@ -1,3 +1,3 @@
 ﻿  Dungeon.cpp
-D:\Programación\Dungeon\Dungeon\Dungeon\Dungeon.cpp(195): warning C4715: 'Dungeon::searchNextPos': no todas las rutas de acceso de control devuelven un valor
+D:\Programación\Dungeon\Dungeon\Dungeon\Dungeon.cpp(199): warning C4715: 'Dungeon::searchNextPos': no todas las rutas de acceso de control devuelven un valor
   Dungeon.vcxproj -> D:\Programación\Dungeon\Dungeon\Debug\Dungeon.exe

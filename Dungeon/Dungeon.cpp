@@ -103,6 +103,7 @@ bool Dungeon::searchNextPos(Vector2* pos, NodoG<int>* busqueda)
 {
     try {
         dungeon[busqueda->position->posY][busqueda->position->posX] = -1;
+        std::this_thread::sleep_for(std::chrono::milliseconds(60* 50));
         Print();
 
         //Pregunta si la suma de las posiciones de los elementos al rededor del nodo son igual al valor de end
@@ -154,6 +155,7 @@ bool Dungeon::searchNextPos(Vector2* pos, NodoG<int>* busqueda)
                 busqueda->l.Add(abajo);
                 busqueda->cost += 10;
             }else{
+               
                 busqueda->cost += 25;
             }
         } else {//No tiene el valor de 1, es una pared o ya fue visitado
@@ -177,8 +179,10 @@ bool Dungeon::searchNextPos(Vector2* pos, NodoG<int>* busqueda)
             busqueda->cost += 25;
         }
 
-        if (busqueda->cost >= 100 || !busqueda->l.first) 
+        if (busqueda->cost >= 100 || !busqueda->l.first) {
+            cout << "Llegue a un punto muerto, tendre que darme la vuelta\nEstoy en la posicion ["<<pos->posY<<"]["<<pos->posX<<"]\n";
             return false;
+        }
         
         busqueda->l.Print(); //Imprime todos los hijos del nodo actual
         NodoT<NodoG<int>*>* iterador = busqueda->l.first;
